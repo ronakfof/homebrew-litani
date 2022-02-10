@@ -8,6 +8,13 @@ class Litani < Formula
       revision: "8b58d19d91b665b1b52f6f6228d49d0866d4a13c"
   license "Apache-2.0"
 
+  bottle do
+    root_url "https://github.com/ronakfof/homebrew-litani/releases/download/litani-1.19.0"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, big_sur:      "9189b23111c706bd09632a600f36e83878f99ae92f43ab2c20dadea0d9014df8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "65cb1d72eba4eb5f2f1e82e560fd159d03e73af1bb7c4770adc01f8069a7a1ac"
+  end
+
   depends_on "coreutils" => :build
   depends_on "mandoc" => :build
   depends_on "scdoc" => :build
