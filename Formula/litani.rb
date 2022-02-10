@@ -3,15 +3,10 @@ class Litani < Formula
 
   desc "Metabuild system"
   homepage "https://awslabs.github.io/aws-build-accumulator/"
-  url "https://github.com/awslabs/aws-build-accumulator/archive/refs/tags/1.19.0.tar.gz"
-  sha256 "1b15b076e4af7c1bd057d52a7b7c9f4101f9d40581f16f089ad6b9863b35b4fa"
+  url "https://github.com/awslabs/aws-build-accumulator.git",
+      tag:      "1.19.0",
+      revision: "8b58d19d91b665b1b52f6f6228d49d0866d4a13c"
   license "Apache-2.0"
-
-  bottle do
-    root_url "https://github.com/ronakfof/homebrew-litani/releases/download/litani-1.19.0"
-    sha256 cellar: :any_skip_relocation, big_sur:      "f285b65fd680c7d8fe321dc0f81da02afcd511e7f446c2769ea7fe4a64868e35"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "40d350c918bfcffceb892109d3d786b6bff0833b8b32eb93f74b764bd3de5bd5"
-  end
 
   depends_on "coreutils" => :build
   depends_on "mandoc" => :build
