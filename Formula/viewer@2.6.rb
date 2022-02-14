@@ -1,4 +1,4 @@
-class Viewer < Formula
+class ViewerAT26 < Formula
     include Language::Python::Virtualenv
 
     desc "Scans the output of CBMC and produces a browsable summary of the results."
