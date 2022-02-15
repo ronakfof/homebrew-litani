@@ -9,6 +9,7 @@ class Kani < Formula
   depends_on "cbmc"
   depends_on "ronakfof/litani/viewer@2.6"
   depends_on "rustup-init"
+  depends_on "python@3.9"
   
   resource "autopep8" do
       url "https://files.pythonhosted.org/packages/77/63/e88f70a614c21c617df0ee3c4752fe7fb66653cba851301d3bcaee4b00ea/autopep8-1.5.7.tar.gz"
@@ -34,6 +35,7 @@ class Kani < Formula
     ENV.prepend_path "PATH", libexec/"vendor/bin"
     venv = virtualenv_create(libexec/"vendor", "python3")
     venv.pip_install resources
+
     system "#{Formula["rustup-init"].bin}/rustup-init", "-y", "--no-modify-path"
     system "#{Formula["rustup-init"].bin}/rustup-init", "-y", "--default-toolchain", "nightly"
     ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
