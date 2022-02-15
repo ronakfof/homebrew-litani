@@ -37,13 +37,9 @@ class Kani < Formula
     system "#{Formula["rustup-init"].bin}/rustup-init", "-y", "--no-modify-path"
     system "#{Formula["rustup-init"].bin}/rustup-init", "-y", "--default-toolchain", "nightly"
     ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
-    # libexec.install Dir["*"]
-    cd libexec do
-        system "git", "clone", "https://github.com/model-checking/kani.git"
-        cd "kani" do
-            system "git", "submodule", "update", "--init"
-            system "(cd src/kani-compiler && cargo build && cd -)"
-        end
+    (libexec/"kani").install Dir["*"]
+    cd libexec/"kani/src/kani-compiler" do
+        system "cargo", "build"
     end
     bin.install_symlink Dir["#{libexec}/kani/scripts/*"]
   end
@@ -52,7 +48,7 @@ class Kani < Formula
     (testpath/"test.rs").write <<~EOF
       // File: test.rs
       fn main() {
-          assert!(1 == 1);
+          assert!(1 == 2);
       }
     EOF
     system "which", "kani"
