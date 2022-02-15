@@ -29,6 +29,7 @@ jobs:
       - name: Build Kani
         run: |
           cd kani
+          git submodule update --init --depth 1
           cargo build
           ./scripts/kani-regression.sh
           export PATH=$(pwd)/scripts:$PATH
