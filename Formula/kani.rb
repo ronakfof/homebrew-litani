@@ -55,7 +55,7 @@ class Kani < Formula
     (testpath/"test.rs").write <<~EOF
       // File: test.rs
       fn main() {
-          assert!(1 == 2);
+          assert!(1 == 3);
       }
     EOF
     system "which", "kani"
