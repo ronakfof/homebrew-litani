@@ -42,6 +42,7 @@ class Kani < Formula
     (libexec/"kani").install Dir["*"]
     cd libexec/"kani" do
         system "cargo", "build"
+        system "./scripts/kani-regression.sh"
     end
     bin.install_symlink Dir["#{libexec}/kani/scripts/*"]
   end
