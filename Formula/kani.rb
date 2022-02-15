@@ -43,6 +43,7 @@ class Kani < Formula
     cd libexec do
       system "git", "clone", "https://github.com/model-checking/kani.git"
       cd "kani" do
+        system "git", "submodule", "update", "--init", "--depth", "1"
         system "cargo", "build"
         system "./scripts/kani-regression.sh"
       end
