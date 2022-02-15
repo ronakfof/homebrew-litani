@@ -33,13 +33,4 @@ jobs:
           cargo build
           ./scripts/kani-regression.sh
           export PATH=$(pwd)/scripts:$PATH
-      - name: Test Kani
-        run: |
-          cat << EOF > test.rs
-            // File: test.rs
-            fn main() {
-                assert!(1 == 2);
-            }
-          EOF
-          kani test.rs
         
