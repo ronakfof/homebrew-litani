@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           brew install ronakfof/litani/viewer@2.6 cbmc rustup-init
-          pip3 install autopep8 pycodestyle toml colorama
+          pip3 install autopep8 toml colorama
       - name: setup dependencies
         run: |
           rustup-init -y --default-toolchain nightly
