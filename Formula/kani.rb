@@ -39,7 +39,7 @@ class Kani < Formula
     system "#{Formula["rustup-init"].bin}/rustup-init", "-y", "--no-modify-path"
     system "#{Formula["rustup-init"].bin}/rustup-init", "-y", "--default-toolchain", "nightly"
     ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
-    # (libexec/"kani").install Dir["*"]
+    libexec.mkpath
     cd libexec do
       system "git", "clone", "https://github.com/model-checking/kani.git"
       cd "kani" do
