@@ -25,14 +25,14 @@ jobs:
           rustup-init -y --default-toolchain nightly
           source $HOME/.cargo/env
       - name: Clone Kani
-        run: https://github.com/model-checking/kani.git
+        run: git clone https://github.com/model-checking/kani.git
       - name: Build Kani
         run: |
           cd kani
           cargo build
           ./scripts/kani-regression.sh
           export PATH=$(pwd)/scripts:$PATH
-      - name: Tets Kani
+      - name: Test Kani
         run: |
           cat << EOF > test.rb
             // File: test.rs
