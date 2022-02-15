@@ -38,7 +38,7 @@ class Kani < Formula
     system "#{Formula["rustup-init"].bin}/rustup-init", "-y", "--default-toolchain", "nightly"
     ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
     (libexec/"kani").install Dir["*"]
-    cd libexec/"kani/src/kani-compiler" do
+    cd libexec/"kani" do
         system "cargo", "build"
     end
     bin.install_symlink Dir["#{libexec}/kani/scripts/*"]
