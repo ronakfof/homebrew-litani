@@ -35,7 +35,7 @@ jobs:
           export PATH=$(pwd)/scripts:$PATH
       - name: Test Kani
         run: |
-          cat << EOF > test.rb
+          cat << EOF > test.rs
             // File: test.rs
             fn main() {
                 assert!(1 == 2);
