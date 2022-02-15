@@ -41,5 +41,5 @@ jobs:
                 assert!(1 == 2);
             }
           EOF
-          kani test.rb
+          kani test.rs
         
