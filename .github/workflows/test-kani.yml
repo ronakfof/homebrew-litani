@@ -8,10 +8,8 @@ jobs:
   setup-kani:
     runs-on: macos-latest
     steps:
-      - name: Tap repo
-        run: brew tap ronakfof/litani/kani
       - name: Install Kani
-        run: brew install kani
+        run: brew install ronakfof/litani/kani
       - name: Test kani
         run: brew test kani
         
