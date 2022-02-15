@@ -13,4 +13,32 @@ jobs:
         run: brew install ronakfof/litani/kani
       - name: Test kani
         run: brew test kani
+  test-kani-standalone:
+    runs-on: macos-latest
+    steps:
+      - name: Install dependencies
+        run: |
+          brew install ronakfof/litani/viewer@2.6 cbmc rustup-init
+          pip3 install autopep8 pycodestyle toml colorama
+      - name: setup dependencies
+        run: |
+          rustup-init -y --default-toolchain nightly
+          source $HOME/.cargo/env
+      - name: Clone Kani
+        run: https://github.com/model-checking/kani.git
+      - name: Build Kani
+        run: |
+          cd kani
+          cargo build
+          ./scripts/kani-regression.sh
+          export PATH=$(pwd)/scripts:$PATH
+      - name: Tets Kani
+        run: |
+          cat << EOF > test.rb
+            // File: test.rs
+            fn main() {
+                assert!(1 == 2);
+            }
+          EOF
+          kani test.rb
         
