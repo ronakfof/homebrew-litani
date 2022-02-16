@@ -31,6 +31,6 @@ class CbmcViewer < Formula
   end
 
   test do
-      system "echo", "test1"
+      system "which", "cbmc-viewer"
   end
 end
