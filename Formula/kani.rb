@@ -36,6 +36,9 @@ class Kani < Formula
     ENV.prepend_path "PATH", libexec/"vendor/bin"
     venv = virtualenv_create(libexec/"vendor", "python3")
     venv.pip_install resources
+    system "#{Formula["rustup-init"].bin}/rustup-init", "-y", "--no-modify-path"
+    system "#{Formula["rustup-init"].bin}/rustup-init", "-y", "--default-toolchain", "nightly"
+    ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
     libexec.install Dir["*"]
     bin.install_symlink Dir["#{libexec}/scripts/*"]
   end
