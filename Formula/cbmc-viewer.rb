@@ -2,12 +2,12 @@ class CbmcViewer < Formula
   include Language::Python::Virtualenv
 
   desc "Scans the output of CBMC and produces a browsable summary of the results."
-  homepage ""
+  homepage "https://github.com/awslabs/aws-viewer-for-cbmc"
   url "https://github.com/awslabs/aws-viewer-for-cbmc/archive/refs/tags/viewer-2.9.tar.gz"
   sha256 "2c185504d32a67bff5df9fceb7074acb0104134d216fabb00379ab3d3289e020"
   license "Apache-2.0"
 
-  depends_on "ctags"
+  depends_on "universal-ctags"
   depends_on "python3"
 
   resource "Jinja2" do

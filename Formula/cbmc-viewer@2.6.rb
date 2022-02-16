@@ -7,7 +7,7 @@ class CbmcViewerAT26 < Formula
   sha256 "c8927e6113866de51b3c5298032b281f05479a3ad7a83853ef724dfe2ca239ad"
   license "Apache-2.0"
 
-  depends_on "ctags"
+  depends_on "universal-ctags"
   depends_on "python3"
 
   resource "Jinja2" do
