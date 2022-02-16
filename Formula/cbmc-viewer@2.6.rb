@@ -2,9 +2,10 @@ class CbmcViewerAT26 < Formula
   include Language::Python::Virtualenv
 
   desc "Scans the output of CBMC and produces a browsable summary of the results."
-  homepage ""
-  url "https://github.com/awslabs/aws-viewer-for-cbmc/archive/refs/tags/viewer-2.6.tar.gz"
-  sha256 "c8927e6113866de51b3c5298032b281f05479a3ad7a83853ef724dfe2ca239ad"
+  homepage "https://github.com/awslabs/aws-viewer-for-cbmc"
+  url "https://github.com/awslabs/aws-viewer-for-cbmc.git",
+      tag:      "viewer-2.6",
+      revision: "c594d5c0a336021d25cbb6be5d3a728d9175b119"
   license "Apache-2.0"
 
   depends_on "universal-ctags"
