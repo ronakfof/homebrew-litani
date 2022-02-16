@@ -2,14 +2,15 @@ class Kani < Formula
   include Language::Python::Virtualenv
   desc "Kani Rust Verifier"
   homepage "https://model-checking.github.io/kani"
-  url "https://github.com/ronakfof/kani/archive/refs/tags/1.1.2.tar.gz"
-  sha256 "6b1dcd7b89ed40405b212f35b58efa8b088cb9e3b1f671fac993a18b792dc312"
+  # url "https://github.com/ronakfof/kani/archive/refs/tags/1.1.2.tar.gz"
+  # sha256 "6b1dcd7b89ed40405b212f35b58efa8b088cb9e3b1f671fac993a18b792dc312"
+  url "https://github.com/ronakfof/litani/releases/download/1.21.3/kani.tar.gz"
+  sha256 "39b4d86a04bfaddae303230fee880211b2f4735d4147772c8586921f90526760"
   license "NOASSERTION"
 
   depends_on "cbmc"
-  depends_on "ronakfof/litani/viewer@2.6"
+  depends_on "ronakfof/litani/cbmc-viewer"
   depends_on "rustup-init"
-  depends_on "python@3.7"
   
   resource "autopep8" do
       url "https://files.pythonhosted.org/packages/77/63/e88f70a614c21c617df0ee3c4752fe7fb66653cba851301d3bcaee4b00ea/autopep8-1.5.7.tar.gz"
@@ -35,19 +36,8 @@ class Kani < Formula
     ENV.prepend_path "PATH", libexec/"vendor/bin"
     venv = virtualenv_create(libexec/"vendor", "python3")
     venv.pip_install resources
-    system "#{Formula["rustup-init"].bin}/rustup-init", "-y", "--no-modify-path"
-    system "#{Formula["rustup-init"].bin}/rustup-init", "-y", "--default-toolchain", "nightly"
-    ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
-    libexec.mkpath
-    cd libexec do
-      system "git", "clone", "https://github.com/model-checking/kani.git"
-      cd "kani" do
-        system "git", "submodule", "update", "--init", "--depth", "1"
-        system "cargo", "build"
-        system "./scripts/kani-regression.sh"
-      end
-    end
-    bin.install_symlink Dir["#{libexec}/kani/scripts/*"]
+    libexec.install Dir["*"]
+    bin.install_symlink Dir["#{libexec}/scripts/*"]
   end
 
   test do
