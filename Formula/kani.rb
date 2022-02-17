@@ -44,10 +44,10 @@ class Kani < Formula
   def post_install
     cd libexec/"kani" do
       system "cargo", "build"
-      # system "export", "PATH=#{libexec}/kani/scripts:$PATH"
+      system "export PATH=$(pwd)/scripts:$PATH"
       # ENV.prepend_path "PATH", libexec/"kani/scripts"
       # ENV['PATH'] = libexec/"kani/scripts" + ENV['PATH']
-      (bin/"scripts").write_env_script libexec/"scripts", PATH: "\"#{libexec}/kani/scripts:${PATH}\""
+      # (bin/"scripts").write_env_script libexec/"scripts", PATH: "\"#{libexec}/kani/scripts:${PATH}\""
     end
   end
 
