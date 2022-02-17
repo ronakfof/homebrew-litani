@@ -2,16 +2,14 @@ class Kani < Formula
   include Language::Python::Virtualenv
   desc "Kani Rust Verifier"
   homepage "https://model-checking.github.io/kani"
-  # url "https://github.com/ronakfof/kani/archive/refs/tags/1.1.2.tar.gz"
-  # sha256 "6b1dcd7b89ed40405b212f35b58efa8b088cb9e3b1f671fac993a18b792dc312"
-  url "https://github.com/ronakfof/litani/releases/download/1.21.3/kani.tar.gz"
-  sha256 "39b4d86a04bfaddae303230fee880211b2f4735d4147772c8586921f90526760"
+  url "https://github.com/ronakfof/kani/archive/refs/tags/1.1.3.tar.gz"
+  sha256 "39db69fdd51362bf7b303125d9ea571089912749f22ec89e33e1694316b7fb20"
   license "NOASSERTION"
 
   depends_on "cbmc"
   depends_on "ronakfof/litani/cbmc-viewer"
   depends_on "rustup-init"
-  
+
   resource "autopep8" do
       url "https://files.pythonhosted.org/packages/77/63/e88f70a614c21c617df0ee3c4752fe7fb66653cba851301d3bcaee4b00ea/autopep8-1.5.7.tar.gz"
       sha256 "276ced7e9e3cb22e5d7c14748384a5cf5d9002257c0ed50c0e075b68011bb6d0"
@@ -39,15 +37,25 @@ class Kani < Formula
     system "#{Formula["rustup-init"].bin}/rustup-init", "-y", "--no-modify-path"
     system "#{Formula["rustup-init"].bin}/rustup-init", "-y", "--default-toolchain", "nightly"
     ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
-    libexec.install Dir["*"]
-    bin.install_symlink Dir["#{libexec}/scripts/*"]
+    (libexec/"kani").install Dir["*"]
+    # bin.install_symlink Dir["#{libexec}/scripts/*"]
+  end
+  
+  def post_install
+    cd libexec/"kani" do
+      system "cargo", "build"
+      # system "export", "PATH=#{libexec}/kani/scripts:$PATH"
+      # ENV.prepend_path "PATH", libexec/"kani/scripts"
+      # ENV['PATH'] = libexec/"kani/scripts" + ENV['PATH']
+      (bin/"scripts").write_env_script libexec/"scripts", PATH: "\"#{libexec}/kani/scripts:${PATH}\""
+    end
   end
 
   test do
     (testpath/"test.rs").write <<~EOF
       // File: test.rs
       fn main() {
-          assert!(1 == 3);
+          assert!(1 == 1);
       }
     EOF
     system "which", "kani"
