@@ -8,6 +8,8 @@ on:
 jobs:
   setup-kani:
     runs-on: macos-10.15
+    permissions:
+      contents: write
     steps:
       - name: Install Kani
         run: brew install ronakfof/litani/kani

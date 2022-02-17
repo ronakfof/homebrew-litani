@@ -42,7 +42,7 @@ class Kani < Formula
   
   def post_install
     cd libexec/"kani" do
-      system "sudo", "cargo", "build"
+      system "cargo", "build"
       system "export PATH=$(pwd)/scripts:$PATH"
     end
   end
