@@ -43,7 +43,7 @@ class Kani < Formula
   def post_install
     cd libexec/"kani" do
       system "cargo", "build"
-      system "export PATH=$(pwd)/scripts:$PATH"
+      system "export PATH=#{libexec}/kani/scripts:$PATH"
     end
   end
 
