@@ -38,16 +38,12 @@ class Kani < Formula
     system "#{Formula["rustup-init"].bin}/rustup-init", "-y", "--default-toolchain", "nightly"
     ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
     (libexec/"kani").install Dir["*"]
-    # bin.install_symlink Dir["#{libexec}/scripts/*"]
   end
   
   def post_install
     cd libexec/"kani" do
-      system "cargo", "build"
+      system "sudo", "cargo", "build"
       system "export PATH=$(pwd)/scripts:$PATH"
-      # ENV.prepend_path "PATH", libexec/"kani/scripts"
-      # ENV['PATH'] = libexec/"kani/scripts" + ENV['PATH']
-      # (bin/"scripts").write_env_script libexec/"scripts", PATH: "\"#{libexec}/kani/scripts:${PATH}\""
     end
   end
 
