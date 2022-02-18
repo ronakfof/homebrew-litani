@@ -35,11 +35,13 @@ class CbmcViewer < Formula
   # end
   test do
     testpath.install Dir["tests/coreHTTP"]
-    system "make", "clone"
-    system "make", "build"
-    system "make", "reports1"
-    system "make", "reports2"
-    system "make", "compare"
+    cd testpath/"tests/coreHTTP" do
+      system "make", "clone"
+      system "make", "build"
+      system "make", "reports1"
+      system "make", "reports2"
+      system "make", "compare"
+    end
 
   end
 end
