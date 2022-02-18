@@ -30,18 +30,7 @@ class CbmcViewer < Formula
     virtualenv_install_with_resources
   end
 
-  # test do
-  #   system "which", "cbmc-viewer"
-  # end
   test do
-    testpath.install Dir["tests/coreHTTP"]
-    cd testpath/"tests/coreHTTP" do
-      system "make", "clone"
-      system "make", "build"
-      system "make", "reports1"
-      system "make", "reports2"
-      system "make", "compare"
-    end
-
+    system "which", "cbmc-viewer"
   end
 end
