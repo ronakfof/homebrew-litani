@@ -33,7 +33,7 @@ class Kani < Formula
 
   def install
     ENV.prepend_path "PATH", libexec/"vendor/bin"
-    venv = virtualenv_create(libexec/"vendor", "python3")
+    venv = virtualenv_create(libexec/"vendor", "python3", system_site_packages: false)
     venv.pip_install resources
     system "#{Formula["rustup"].bin}/rustup-init", "-qy", "--no-modify-path"
     system "#{Formula["rustup-init"].bin}/rustup-init", "-qy", "--default-toolchain", "nightly"
@@ -59,7 +59,7 @@ class Kani < Formula
     (testpath/"test.rs").write <<~EOF
       // File: test.rs
       fn main() {
-          assert!(1 == 2);
+          assert!(1 == 5);
       }
     EOF
     system "which", "kani"
