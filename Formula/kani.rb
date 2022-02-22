@@ -26,25 +26,35 @@ class Kani < Formula
   end
 
   resource "colorama" do
-      url "https://files.pythonhosted.org/packages/1f/bb/5d3246097ab77fa083a61bd8d3d527b7ae063c7d8e8671b1cf8c4ec10cbe/colorama-0.4.4.tar.gz"
-      sha256 "5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"
+    url "https://files.pythonhosted.org/packages/82/75/f2a4c0c94c85e2693c229142eb448840fba0f9230111faa889d1f541d12d/colorama-0.4.3.tar.gz"
+    sha256 "e96da0d330793e2cb9485e9ddfd918d456036c7149416295932478192f4436a1"
   end
 
   def install
     ENV.prepend_path "PATH", libexec/"vendor/bin"
     venv = virtualenv_create(libexec/"vendor", "python3")
     venv.pip_install resources
-    system "#{Formula["rustup-init"].bin}/rustup-init", "-y", "--no-modify-path"
-    system "#{Formula["rustup-init"].bin}/rustup-init", "-y", "--default-toolchain", "nightly"
-    ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
     (libexec/"kani").install Dir["*"]
   end
-  
+
   def post_install
+    system "#{Formula["rustup"].bin}/rustup-init", "-qy", "--no-modify-path"
+    ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
+    nightly_version = "nightly-2021-11-08"
+    components = %w[rustc cargo]
+    system "rustup", "toolchain", "install", nightly_version
+    system "rustup", "component", "add", *components, "--toolchain", nightly_version
     cd libexec/"kani" do
       system "cargo", "build"
-      system "export PATH=#{libexec}/kani/scripts:$PATH"
     end
+  end
+
+  def caveats
+    <<~EOS
+      Please add Kani scripts to PATH by running the following commands - 
+      echo 'PATH="#{libexec}/kani/scripts:$PATH"' >> ~/.bash_profile
+      export PATH="#{libexec}/kani/scripts:$PATH"
+    EOS
   end
 
   test do
