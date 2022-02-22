@@ -12,7 +12,11 @@ jobs:
       contents: write
     steps:
       - name: Install Kani
-        run: brew install ronakfof/litani/kani
+        run: |
+          brew install ronakfof/litani/kani
+          pip3 install colorama
+      - name: add path
+        run: export PATH="/usr/local/Cellar/kani/1.1.3/libexec/kani/scripts:$PATH"
       - name: Test kani
         run: brew test kani
         

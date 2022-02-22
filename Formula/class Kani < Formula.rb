@@ -37,11 +37,22 @@ class Kani < Formula
     venv.pip_install resources
     system "#{Formula["rustup"].bin}/rustup-init", "-qy", "--no-modify-path"
     system "#{Formula["rustup-init"].bin}/rustup-init", "-qy", "--default-toolchain", "nightly"
+    ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
+
+    # nightly_version = "nightly-2021-11-08"
+    # components = %w[rustc cargo]
+    # system "rustup", "toolchain", "install", nightly_version
+    # system "rustup", "component", "add", *components, "--toolchain", nightly_version
     (libexec/"kani").install Dir["*"]
   end
 
   def post_install
+    # system "#{Formula["rustup"].bin}/rustup-init", "-qy", "--no-modify-path"
     ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
+    # nightly_version = "nightly-2021-11-08"
+    # components = %w[rustc cargo]
+    # system "rustup", "toolchain", "install", nightly_version
+    # system "rustup", "component", "add", *components, "--toolchain", nightly_version
     cd libexec/"kani" do
       system "cargo", "build"
     end
