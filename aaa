@@ -8,7 +8,8 @@ class Kani < Formula
 
   depends_on "cbmc"
   depends_on "ronakfof/litani/cbmc-viewer"
-  depends_on "rustup"
+  depends_on "rustup-init"
+  depends_on "python@3.9"
 
   resource "autopep8" do
       url "https://files.pythonhosted.org/packages/77/63/e88f70a614c21c617df0ee3c4752fe7fb66653cba851301d3bcaee4b00ea/autopep8-1.5.7.tar.gz"
@@ -32,21 +33,15 @@ class Kani < Formula
 
   def install
     ENV.prepend_path "PATH", libexec/"vendor/bin"
-    venv = virtualenv_create(libexec/"vendor", "python3")
+    venv = virtualenv_create(libexec/"vendor", "python3", system_site_packages: false)
     venv.pip_install resources
     system "#{Formula["rustup"].bin}/rustup-init", "-qy", "--no-modify-path"
-    # system "#{Formula["rustup-init"].bin}/rustup-init", "-qy", "--default-toolchain", "nightly"
-    ENV.prepend_path "PATH", "/home/ronakf/.cargo/env"
-    # system "source /home/ronakf/.cargo/env"
-
-    # nightly_version = "nightly-2021-11-08"
-    components = %w[rustc cargo]
-    system "rustup", "toolchain", "install", "nightly"
-    system "rustup", "component", "add", *components, "--toolchain", nightly_version
+    system "#{Formula["rustup-init"].bin}/rustup-init", "-qy", "--default-toolchain", "nightly"
     (libexec/"kani").install Dir["*"]
   end
-  
+
   def post_install
+    ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
     cd libexec/"kani" do
       system "cargo", "build"
     end
@@ -64,7 +59,7 @@ class Kani < Formula
     (testpath/"test.rs").write <<~EOF
       // File: test.rs
       fn main() {
-          assert!(1 == 2);
+          assert!(1 == 5);
       }
     EOF
     system "which", "kani"
