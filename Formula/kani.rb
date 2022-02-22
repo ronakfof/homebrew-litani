@@ -37,14 +37,15 @@ class Kani < Formula
     venv.pip_install resources
     system "#{Formula["rustup"].bin}/rustup-init", "-qy", "--no-modify-path"
     system "#{Formula["rustup-init"].bin}/rustup-init", "-qy", "--default-toolchain", "nightly"
-    (libexec/"kani").install Dir["*"]
+    (buildpath/"kani").install Dir["*"]
   end
 
   def post_install
     ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
-    cd libexec/"kani" do
+    cd buildpath/"kani" do
       system "cargo", "build"
     end
+    (libexec/"kani").install buildpath/"kani"
   end
 
   def caveats
