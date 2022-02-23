@@ -7,6 +7,7 @@ class CbmcViewer < Formula
       revision: "3049a3451d9c5651c7be1596ddaa69e0051f83c8"
   license "Apache-2.0"
 
+  depends_on "cbmc" => :test
   depends_on "python@3.9"
   depends_on "universal-ctags"
 
