@@ -7,7 +7,7 @@ class CbmcViewer < Formula
       revision: "486af0a066b9034ce6bc7a58cf0ab3d9b25ac964"
   license "Apache-2.0"
 
-  depends_on "python3"
+  depends_on "python3.9"
   depends_on "universal-ctags"
 
   resource "Jinja2" do

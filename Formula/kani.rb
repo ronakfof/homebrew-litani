@@ -43,10 +43,8 @@ class Kani < Formula
   def post_install
     ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
     cd libexec/"kani" do
-      system "cargo", "build", "--target-dir", buildpath
+      system "cargo", "build"
     end
-    (libexec/"kani/target").mkpath
-    cp_r buildpath/"debug", libexec/"kani/target"
   end
 
   def caveats
