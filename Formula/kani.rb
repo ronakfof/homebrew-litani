@@ -50,8 +50,7 @@ class Kani < Formula
   def caveats
     <<~EOS
       Please add Kani scripts to PATH by running the following commands - 
-      echo 'PATH="#{libexec}/kani/scripts:$PATH"' >> ~/.bash_profile
-      export PATH="#{libexec}/kani/scripts:$PATH"
+              export PATH="#{libexec}/kani/scripts:$PATH"
     EOS
   end
 
