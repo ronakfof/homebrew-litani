@@ -3,8 +3,8 @@ class CbmcViewer < Formula
   desc "Scans the output of CBMC and produces a browsable summary of the results"
   homepage "https://github.com/awslabs/aws-viewer-for-cbmc"
   url "https://github.com/awslabs/aws-viewer-for-cbmc.git",
-      tag:      "viewer-2.10",
-      revision: "3049a3451d9c5651c7be1596ddaa69e0051f83c8"
+      tag:      "2.46",
+      revision: "ebf85ec7c8309405d58db9fb2f484aefb82395da"
   license "Apache-2.0"
 
   depends_on "cbmc" => :test
