@@ -37,7 +37,7 @@ class Kani < Formula
     venv.pip_install resources
     # system "#{Formula["rustup"].bin}/rustup-init", "-qy", "--no-modify-path"
     # system "#{Formula["rustup-init"].bin}/rustup-init", "-qy", "--default-toolchain", "nightly"
-    # ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
+    ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
     system "#{Formula["rustup-init"].bin}/rustup-init", "-qy", "--no-modify-path"
     nightly_version = "nightly-2022-02-22"
     components = %w[llvm-tools-preview rustc-dev rust-src rustfmt]
