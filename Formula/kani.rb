@@ -55,7 +55,7 @@ class Kani < Formula
 
   def caveats
     <<~EOS
-      Please add cargo and rust to PATH
+      Please add cargo and rustc to PATH
               export PATH="#{HOMEBREW_CACHE}/"cargo_cache/bin":$PATH"
       Please add Kani scripts to PATH by running the following commands - 
               export PATH="#{libexec}/kani/scripts:$PATH"
