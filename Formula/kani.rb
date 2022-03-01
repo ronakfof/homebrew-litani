@@ -35,8 +35,14 @@ class Kani < Formula
     ENV.prepend_path "PATH", libexec/"vendor/bin"
     venv = virtualenv_create(libexec/"vendor", "python3", system_site_packages: false)
     venv.pip_install resources
-    system "#{Formula["rustup"].bin}/rustup-init", "-qy", "--no-modify-path"
-    system "#{Formula["rustup-init"].bin}/rustup-init", "-qy", "--default-toolchain", "nightly"
+    # system "#{Formula["rustup"].bin}/rustup-init", "-qy", "--no-modify-path"
+    # system "#{Formula["rustup-init"].bin}/rustup-init", "-qy", "--default-toolchain", "nightly"
+    # ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
+    system "#{Formula["rustup-init"].bin}/rustup-init", "-qy", "--no-modify-path"
+    nightly_version = "nightly-2022-02-22"
+    components = %w[llvm-tools-preview rustc-dev rust-src rustfmt]
+    system "rustup", "toolchain", "install", nightly_version
+    system "rustup", "component", "add", *components, "--toolchain", nightly_version
     (libexec/"kani").install Dir["*"]
   end
 
@@ -49,6 +55,8 @@ class Kani < Formula
 
   def caveats
     <<~EOS
+      Please add cargo and rust to PATH
+              export PATH="#{HOMEBREW_CACHE}/"cargo_cache/bin":$PATH"
       Please add Kani scripts to PATH by running the following commands - 
               export PATH="#{libexec}/kani/scripts:$PATH"
     EOS
