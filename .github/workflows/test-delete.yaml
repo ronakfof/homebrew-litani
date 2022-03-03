@@ -8,5 +8,4 @@ jobs:
     steps:
       - name: check event
         run: |
-          echo ${{ github.event.ref }}
-          echo ${{ github.event.ref_type }}
+          echo ${{ github.ref_name }}
