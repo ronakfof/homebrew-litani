@@ -1,0 +1,10 @@
+name: test tag deletion
+on:
+  - delete
+
+jobs:
+  test-deletion:
+    runs-on: macos-10.15
+    steps:
+      - name: check event
+        run: echo ${{ github.event }}

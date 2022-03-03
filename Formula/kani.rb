@@ -69,6 +69,6 @@ class Kani < Formula
           assert!(1 == 5);
       }
     EOF
-    assert_match "VERIFICATION:- FAILED", shell_output("kani #{testpath}/test.rs 2>&1")
+    assert_match "VERIFICATION:- FAILED", shell_output("kani #{testpath}/test.rs 2>&1", 1)
   end
 end
