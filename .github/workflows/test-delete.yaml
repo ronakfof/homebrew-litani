@@ -13,4 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: restore tag
-        run: git push tag ${{ github.event.ref }}
+        run: |
+          git fsck --unreachable | grep tag
+          git update-ref refs/tags/${{ github.event.ref }}
