@@ -10,3 +10,7 @@ jobs:
         run: |
           echo ${{ github.event.ref }}
           echo ${{ github.event.ref_type }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: restore tag
+        run: git push tag ${{ github.event.ref }}
