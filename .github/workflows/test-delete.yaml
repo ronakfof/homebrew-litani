@@ -7,4 +7,6 @@ jobs:
     runs-on: macos-10.15
     steps:
       - name: check event
-        run: echo ${{ github.event }}
+        run: |
+          echo ${{ github.event.payload.ref }}
+          echo ${{ github.event.payload.ref_type }}
