@@ -9,14 +9,11 @@ jobs:
       - name: check event
         run: |
           echo ${{ github.event.ref }}
-          for i in ${{ github.event }}
-          do
-              echo "key: $i"
-              echo "value: ${arr[$i]}"
-          done
+          echo ${{ github.event.repository.commits_url }}
+          echo ${{ github.event.repository.git_commits_url }}
       - name: Checkout code
         uses: actions/checkout@v2
       - name: restore tag
         run: |
-          # git tag -a ${{ github.event.ref }} ${{ github.event.repository.commits_url }} -m "${{ github.event.ref }}"
-          # git push origin ${{ github.event.ref }}
+          git tag -a ${{ github.event.ref }} ${{ github.event.repository.commits_url }} -m "${{ github.event.ref }}"
+          git push origin ${{ github.event.ref }}
