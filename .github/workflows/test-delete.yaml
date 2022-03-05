@@ -9,7 +9,11 @@ jobs:
       - name: check event
         run: |
           echo ${{ github.event.ref }}
-          echo ${{ github.event.repository }}
+          for i in ${{ github.event }}
+          do
+              echo "key: $i"
+              echo "value: ${arr[$i]}"
+          done
       - name: Checkout code
         uses: actions/checkout@v2
       - name: restore tag
