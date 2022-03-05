@@ -9,10 +9,10 @@ jobs:
       - name: check event
         run: |
           echo ${{ github.event.ref }}
-          echo ${{ github.event.ref_type }}
+          echo ${{ github.event.repository.commits_url }}
       - name: Checkout code
         uses: actions/checkout@v2
       - name: restore tag
         run: |
-          git fsck --unreachable | grep tag
-          git update-ref refs/tags/${{ github.event.ref }}
+          git tag -a ${{ github.event.ref }} ${{ github.event.repository.commits_url }} -m "${{ github.event.ref }}"
+          git push origin ${{ github.event.ref }}
