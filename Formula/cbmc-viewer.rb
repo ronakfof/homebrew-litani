@@ -8,6 +8,7 @@ class CbmcViewer < Formula
   license "Apache-2.0"
 
   depends_on "cbmc" => :test
+  depends_on "python"
   depends_on "universal-ctags" => :optional
 
   resource "Jinja2" do
