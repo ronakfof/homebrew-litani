@@ -1,15 +1,21 @@
 class CbmcViewer < Formula
   include Language::Python::Virtualenv
   desc "Scans the output of CBMC and produces a browsable summary of the results"
-  homepage "https://github.com/awslabs/aws-viewer-for-cbmc"
-  url "https://github.com/awslabs/aws-viewer-for-cbmc.git",
-      tag:      "viewer-2.10",
-      revision: "3049a3451d9c5651c7be1596ddaa69e0051f83c8"
+  homepage "https://github.com/model-checking/cbmc-viewer"
+  url "https://github.com/model-checking/cbmc-viewer.git",
+      tag:      "viewer-3.3",
+      revision: "dd7fea375b32283cc5926ef2adf1cc61b8a57830"
   license "Apache-2.0"
 
+  bottle do
+    root_url "https://github.com/model-checking/cbmc-viewer/releases/download/viewer-3.3"
+    sha256 cellar: :any_skip_relocation, big_sur:      "7393f004f430f88ef0df186e6f4a4d3d8ac8c2484b5c8947089ffedb49a9eb4b"
+    sha256 cellar: :any_skip_relocation, catalina:     "8bc2ea084c587e66eba4f02528954efada0e314c6a07e285afc60c8f5637dd32"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "630c4818b8fc733143cf0f0a3d61bf2453843a6277b8b0c993723f47e4e773d3"
+  end
+
   depends_on "cbmc" => :test
-  depends_on "python@3.9"
-  depends_on "universal-ctags"
+  depends_on "universal-ctags" => :optional
 
   resource "Jinja2" do
     url "https://files.pythonhosted.org/packages/91/a5/429efc6246119e1e3fbf562c00187d04e83e54619249eb732bb423efa6c6/Jinja2-3.0.3.tar.gz"
@@ -28,9 +34,32 @@ class CbmcViewer < Formula
 
   def install
     virtualenv_install_with_resources
+    bash_completion.install "src/cbmc_viewer/etc/bash_completion.d/cbmc-viewer.sh"
   end
 
   test do
-    system "which", "cbmc-viewer"
+    (testpath/"main.c").write <<~EOS
+      #include <stdlib.h>
+
+      static int global;
+
+      int main() {
+        int *ptr = malloc(sizeof(int));
+        assert(global > 0);
+        return 0;
+      }
+    EOS
+
+    system "goto-cc", "-o", "main.goto", "main.c"
+    (testpath/"cbmc.xml").write shell_output("cbmc main.goto --trace --xml-ui", 10)
+    (testpath/"coverage.xml").write shell_output("cbmc main.goto --cover location --xml-ui")
+    (testpath/"property.xml").write shell_output("cbmc main.goto --show-properties --xml-ui")
+    system bin/"cbmc-viewer", "--goto", "main.goto",
+                              "--result", "cbmc.xml",
+                              "--coverage", "coverage.xml",
+                              "--property", "property.xml",
+                              "--srcdir", "."
+    assert_predicate testpath/"report/html/index.html", :exist?
   end
 end
+
